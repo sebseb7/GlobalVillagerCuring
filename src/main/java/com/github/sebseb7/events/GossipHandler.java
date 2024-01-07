@@ -1,4 +1,4 @@
-package me.gwodny.events;
+package com.github.sebseb7.events;
 
 import java.util.Arrays;
 
