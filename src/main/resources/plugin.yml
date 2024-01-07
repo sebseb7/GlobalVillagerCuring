@@ -1,6 +1,6 @@
 name: GlobalVillagerCuring
 version: '${project.version}'
 main: me.gwodny.globalvillagercuring
-api-version: 1.18
+api-version: 1.20
 authors: [ gwodny ]
 description: Allows villager curing to apply to all players.
