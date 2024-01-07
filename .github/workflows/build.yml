@@ -1,0 +1,27 @@
+name: Build
+on:
+  push:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - run: mvn --batch-mode --update-snapshots verify
+    - run: rm target/original*
+    - run: mkdir staging && cp target/*.jar staging
+    - run: echo "filename=`ls target/*.jar |xargs basename`" >> $GITHUB_ENV
+    - uses: actions/upload-artifact@v3
+      with:
+        name: ${{ env.filename }}
+        path: staging
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: target/*.jar
